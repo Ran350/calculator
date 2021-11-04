@@ -19,18 +19,20 @@ export class Parser {
     let res = this.term(s);
 
     while (this.i < s.length) {
-      if (s[this.i] === "+") {
-        this.countUp();
-        res += this.term(s);
-        continue;
-      }
+      switch (s[this.i]) {
+        case "+":
+          this.countUp();
+          res += this.term(s);
+          continue;
 
-      if (s[this.i] === "-") {
-        this.countUp();
-        res -= this.term(s);
-        continue;
+        case "-":
+          this.countUp();
+          res -= this.term(s);
+          continue;
+
+        default:
+          return res;
       }
-      return res;
     }
     return res;
   };
@@ -44,23 +46,21 @@ export class Parser {
     let res = this.factor(s);
 
     while (this.i < s.length) {
-      if (s[this.i] === "*") {
-        this.countUp();
-        res *= this.factor(s);
-        continue;
-      }
+      switch (s[this.i]) {
+        case "*":
+          this.countUp();
+          res *= this.factor(s);
+          continue;
 
-      if (s[this.i] === "/") {
-        this.countUp();
-        res /= this.factor(s);
-        continue;
-      }
+        case "/":
+          this.countUp();
+          res /= this.factor(s);
+          continue;
 
-      if (s[this.i] === "(") {
-        res *= this.factor(s);
-        continue;
+        case "(":
+          res *= this.factor(s);
+          continue;
       }
-
       break;
     }
     return res;
@@ -92,13 +92,13 @@ export class Parser {
    * @returns
    */
   num: Bnf = (s) => {
-    let res = "";
+    let digit = "";
 
     while (this.i < s.length && /[0-9]/.test(s[this.i])) {
-      res += s[this.i];
+      digit += s[this.i];
       this.countUp();
     }
 
-    return parseInt(res);
+    return parseInt(digit);
   };
 }

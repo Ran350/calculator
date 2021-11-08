@@ -4,6 +4,7 @@
   "description": "",
   "main": "calculator.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [],

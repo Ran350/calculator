@@ -94,11 +94,11 @@ export class Parser {
   num: Bnf = (s) => {
     let digit = "";
 
-    while (this.i < s.length && /[0-9]/.test(s[this.i])) {
+    while (this.i < s.length && /[0-9\.]/.test(s[this.i])) {
       digit += s[this.i];
       this.countUp();
     }
 
-    return parseInt(digit);
+    return parseFloat(digit);
   };
 }

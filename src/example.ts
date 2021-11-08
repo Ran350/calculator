@@ -1,4 +1,5 @@
 import { calculate } from "./calculator";
 
-console.log(calculate("2+100(3+4*5)"));
-// -> 2302
+const formula = "1.3/(2+3*2-1.2)";
+console.log(formula, "=", calculate(formula));
+// -> 0.191176471

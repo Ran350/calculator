@@ -21,5 +21,10 @@ test("test calculate()", () => {
   // 2桁以上の項にも対応する
   expect(calculate("2+100(3+4*5)")).toBe(2302);
 
-  // expect(calculate("")).toBe();
+  // 小数の演算にも対応する
+  expect(calculate("450*1.08")).toBe(486);
+
+  // 答えが小数になる演算にも小数第9位までは対応する
+  expect(calculate("1/3")).toBe(0.333333333);
+  expect(calculate("1.3*4.1")).toBe(5.33);
 });

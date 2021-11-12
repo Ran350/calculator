@@ -11,13 +11,25 @@ export class Parser {
   };
 
   /**
-   * @description expr = term, {("+", term) | ("-", term)}
+   * @拡張BNF expr ::= ("+"|"-")?, term, [ ("+", term) | ("-", term) ]*
    * @param s
    * @returns 加算，減算の結果
    */
   expr: Bnf = (s) => {
-    let res = this.term(s);
+    // ("+"|"-")?
+    let isPlus = 1;
+    if (s[this.i] == "+") {
+      this.countUp();
+    }
+    if (s[this.i] == "-") {
+      this.countUp();
+      isPlus = -1;
+    }
 
+    // term
+    let res = this.term(s) * isPlus;
+
+    // [ ("+", term) | ("-", term) ]*
     while (this.i < s.length) {
       switch (s[this.i]) {
         case "+":
@@ -38,13 +50,15 @@ export class Parser {
   };
 
   /**
-   * @description term = factor, {("*", factor) | ("/", factor) | ("(", factor)}
+   * @拡張BNF term = factor, [ ("*", factor) | ("/", factor) | ("(", factor) ]*
    * @param s
    * @returns 掛け算，割り算の結果
    */
   term: Bnf = (s) => {
+    // factor
     let res = this.factor(s);
 
+    // [ ("*", factor) | ("/", factor) | ("(", factor) ]*
     while (this.i < s.length) {
       switch (s[this.i]) {
         case "*":
@@ -67,7 +81,7 @@ export class Parser {
   };
 
   /**
-   * @description factor = ("(", expr, ")") | number
+   * @拡張BNF factor = ( "(", expr, ")" ) | number
    * @param s
    * @returns
    */

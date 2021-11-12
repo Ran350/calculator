@@ -17,6 +17,7 @@ test("test calculate()", () => {
   expect(calculate("2*(2+3)")).toBe(10);
   expect(calculate("2(2+3)")).toBe(10);
   expect(calculate("(1+2)*3")).toBe(9);
+  expect(calculate("((2+1))")).toBe(3);
 
   // 2桁以上の項にも対応する
   expect(calculate("2+100(3+4*5)")).toBe(2302);
@@ -27,4 +28,10 @@ test("test calculate()", () => {
   // 答えが小数になる演算にも小数第9位までは対応する
   expect(calculate("1/3")).toBe(0.333333333);
   expect(calculate("1.3*4.1")).toBe(5.33);
+
+  // 演算子ではなく正負の数としての +,- に対応する
+  expect(calculate("+1+2")).toBe(3);
+  expect(calculate("-1+2")).toBe(1);
+  expect(calculate("-1+(-2)")).toBe(-3);
+  expect(calculate("+1*(-2)")).toBe(-2);
 });

@@ -18,10 +18,10 @@ export class Parser {
   expr: Bnf = (s) => {
     // ("+"|"-")?
     let isPlus = 1;
-    if (s[this.i] == "+") {
+    if (s[this.i] === "+") {
       this.countUp();
     }
-    if (s[this.i] == "-") {
+    if (s[this.i] === "-") {
       this.countUp();
       isPlus = -1;
     }
@@ -86,7 +86,7 @@ export class Parser {
    * @returns
    */
   factor: Bnf = (s) => {
-    if (s[this.i] != "(") {
+    if (s[this.i] !== "(") {
       return this.num(s);
     }
 
@@ -108,7 +108,7 @@ export class Parser {
   num: Bnf = (s) => {
     let digit = "";
 
-    while (this.i < s.length && /[0-9\.]/.test(s[this.i])) {
+    while (this.i < s.length && /[0-9.]/.test(s[this.i])) {
       digit += s[this.i];
       this.countUp();
     }
